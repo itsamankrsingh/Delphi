@@ -1,0 +1,52 @@
+object BallGame: TBallGame
+  Left = 0
+  Top = 0
+  Caption = 'Ball Game'
+  ClientHeight = 391
+  ClientWidth = 414
+  Color = clBtnFace
+  Font.Charset = ANSI_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -16
+  Font.Name = 'Comic Sans MS'
+  Font.Style = [fsItalic]
+  TextHeight = 23
+  object lblCaption: TLabel
+    Left = 32
+    Top = 32
+    Width = 107
+    Height = 23
+    Caption = 'Click a Button!'
+  end
+  object Shape1: TShape
+    Left = 232
+    Top = 136
+    Width = 65
+    Height = 65
+  end
+  object btnUp: TButton
+    Left = 32
+    Top = 61
+    Width = 107
+    Height = 43
+    Caption = 'Up!'
+    TabOrder = 0
+  end
+  object btnDown: TButton
+    Left = 32
+    Top = 128
+    Width = 107
+    Height = 41
+    Caption = 'Down!'
+    TabOrder = 1
+  end
+  object bitBtnClose: TBitBtn
+    Left = 48
+    Top = 328
+    Width = 75
+    Height = 25
+    Kind = bkClose
+    NumGlyphs = 2
+    TabOrder = 2
+  end
+end

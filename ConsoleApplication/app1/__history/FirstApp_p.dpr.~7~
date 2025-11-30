@@ -1,0 +1,55 @@
+program FirstApp_p;
+// Comment
+{ Multiline
+  comment }
+(* Another multiline comment *)
+
+{$APPTYPE CONSOLE}
+{$R *.res}
+
+uses
+  SysUtils, Vcl.Dialogs, Character, Math;
+
+type
+  IntArray = array [1 .. 10] of Integer;
+  DynArray = array of Integer;
+
+var
+  StrText: string;
+  StrNum: string;
+  // -2,147, 483,648 to 2,147, 483,647 (Same ad LongInt)
+  Age: Integer;
+  // 0 to 255 (Same as Byte and UInt8)
+  Grade: Char;
+  // True or False
+  CanVote: Boolean;
+  // 5.0E-324 to 1.7E308 (15 - 16 Significant digits) (Same as ]
+  Balance: Double;
+
+  // -128 to 127 (Same as Int8)
+  ChildTotal: ShortInt;
+  // 0 to 65,535 (Same as WideChar and UInt16)
+  Income: Word;
+  // -32,768 to 32,767 (Same as Int16)
+  Savings: SmallInt;
+  // -9,223,372, 036, 854, 775, 808 to 9,223, 372, 036, 854, 775, 807
+  // Same as Comp
+  DeficitTot: Int64;
+  // -922,337,203, 685, 477.5808 to 922,337, 203, 685, 477.5807
+  DeficitChange: Currency;
+
+  mArray: IntArray;
+  mDynArray: DynArray;
+mMultiDimArr: array [0 .. 3, 0 .. 2] of Integer;
+  W, X, Y:Integer;
+
+begin
+  try
+    { TODO -oUser -cConsole Main : Insert code here }
+    Writeln('Hello Delphi');
+  except
+    on E: Exception do
+      Writeln(E.ClassName, ': ', E.Message);
+  end;
+
+end.

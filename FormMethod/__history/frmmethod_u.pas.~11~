@@ -1,0 +1,57 @@
+﻿unit frmmethod_u;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons;
+
+type
+  TfrmChooseYourLang = class(TForm)
+    lblName: TLabel;
+    lblSurname: TLabel;
+    lblAge: TLabel;
+    edtName: TEdit;
+    edtSurname: TEdit;
+    edtAge: TEdit;
+    bitBtnReset: TBitBtn;
+    btnEnglish: TButton;
+    btnHindi: TButton;
+    btnFrench: TButton;
+    btnBengali: TButton;
+    procedure FormCreate(Sender: TObject);
+    procedure btnHindiClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmChooseYourLang: TfrmChooseYourLang;
+
+implementation
+
+{$R *.dfm}
+
+
+
+procedure TfrmChooseYourLang.btnHindiClick(Sender: TObject);
+begin
+  lblName.Font.Name := 'Mangal';
+  lblSurname.Font.Name := 'Mangal';
+  lblAge.Font.Name := 'Mangal';
+  lblName.Caption := 'नाम ';
+  lblSurname.Caption := 'उपनाम ';
+  lblAge.Caption := 'आयु ';
+end;
+
+procedure TfrmChooseYourLang.FormCreate(Sender: TObject);
+begin
+  edtName.Clear;
+  edtSurname.Clear;
+  edtAge.Text := '';
+end;
+
+end.

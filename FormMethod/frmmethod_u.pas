@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons,
+  System.IniFiles, System.IOUtils;
 
 type
   TfrmChooseYourLang = class(TForm)
@@ -27,7 +28,9 @@ type
     procedure btnBengaliClick(Sender: TObject);
     procedure bitBtnResetClick(Sender: TObject);
   private
-    { Private declarations }
+    procedure SetLabelFont(const AFont: string);
+    procedure SetLabels(const ATitle, AName, ASurname, AAge, FontName: string);
+    procedure LoadLanguage(const ALangSection: string);
   public
     { Public declarations }
   end;
@@ -39,68 +42,114 @@ implementation
 
 {$R *.dfm}
 
-{ ------------ BENGALI ------------ }
-procedure TfrmChooseYourLang.bitBtnResetClick(Sender: TObject);
+procedure TfrmChooseYourLang.LoadLanguage(const ALangSection: string);
+var
+  Ini: TMemIniFile;
+  FontName: string;
+  FileName: string;
+  Title: String;
+  Name: String;
+  SurName: String;
+  Age: String;
 begin
-  edtName.Clear;
-  edtSurname.Clear;
-  edtAge.Text := '';
-end;
+  FileName := ExtractFilePath(ParamStr(0)) + 'languages.ini';
 
-procedure TfrmChooseYourLang.btnBengaliClick(Sender: TObject);
-begin
+  // TMemIniFile with UTF-8 support
+  Ini := TMemIniFile.Create(FileName, TEncoding.UTF8);
+  try
+    FontName := Ini.ReadString(ALangSection, 'Font', 'Segoe UI');
+    SetLabelFont(FontName);
 
-  lblName.Font.Name := 'Nirmala UI'; // Best Windows Bengali font
-  lblSurname.Font.Name := 'Nirmala UI';
-  lblAge.Font.Name := 'Nirmala UI';
+    Title := Ini.ReadString(ALangSection, 'Title', '') + ' ';
+    Name := Ini.ReadString(ALangSection, 'Name', '') + ' ';
+    SurName := Ini.ReadString(ALangSection, 'Surname', '') + ' ';
+    Age := Ini.ReadString(ALangSection, 'Age', '') + ' ';
 
-  frmChooseYourLang.Caption := 'আপনার ভাষা নির্বাচন করুন';
-
-  lblName.Caption := 'নাম ';
-  lblSurname.Caption := 'উপনাম ';
-  lblAge.Caption := 'বয়স ';
+    SetLabels(Title, Name, SurName, Age, FontName);
+  finally
+    Ini.Free;
+  end;
 end;
 
 { ------------ ENGLISH ------------ }
 procedure TfrmChooseYourLang.btnEnglishClick(Sender: TObject);
 begin
-  lblName.Font.Name := 'Comic Sans MS';
-  lblSurname.Font.Name := 'Comic Sans MS';
-  lblAge.Font.Name := 'Comic Sans MS';
-
-  frmChooseYourLang.Caption := 'Choose Your Language';
-
-  lblName.Caption := 'Name';
-  lblSurname.Caption := 'Surname';
-  lblAge.Caption := 'Age';
-end;
-
-{ ------------ FRENCH ------------ }
-procedure TfrmChooseYourLang.btnFrenchClick(Sender: TObject);
-begin
-  lblName.Font.Name := 'Comic Sans MS';
-  lblSurname.Font.Name := 'Comic Sans MS';
-  lblAge.Font.Name := 'Comic Sans MS';
-
-  frmChooseYourLang.Caption := 'Choisissez votre langue';
-
-  lblName.Caption := 'Nom';
-  lblSurname.Caption := 'Prénom';
-  lblAge.Caption := 'Âge';
+  LoadLanguage('English');
 end;
 
 { ------------ HINDI ------------ }
 procedure TfrmChooseYourLang.btnHindiClick(Sender: TObject);
 begin
-  lblName.Font.Name := 'Mangal';
-  lblSurname.Font.Name := 'Mangal';
-  lblAge.Font.Name := 'Mangal';
+  LoadLanguage('Hindi');
+end;
 
-  frmChooseYourLang.Caption := 'अपनी भाषा चुनें';
+{ ------------ BENGALI ------------ }
 
-  lblName.Caption := 'नाम ';
-  lblSurname.Caption := 'उपनाम ';
-  lblAge.Caption := 'आयु ';
+procedure TfrmChooseYourLang.btnBengaliClick(Sender: TObject);
+begin
+  LoadLanguage('Bengali');
+end;
+
+{ ------------ FRENCH ------------ }
+procedure TfrmChooseYourLang.btnFrenchClick(Sender: TObject);
+begin
+  LoadLanguage('French');
+end;
+
+procedure TfrmChooseYourLang.SetLabelFont(const AFont: string);
+begin
+  lblName.Font.Name := AFont;
+  lblSurname.Font.Name := AFont;
+  lblAge.Font.Name := AFont;
+end;
+
+//
+procedure TfrmChooseYourLang.SetLabels(const ATitle, AName, ASurname, AAge,
+  FontName: string);
+begin
+  SetLabelFont(FontName);
+
+  frmChooseYourLang.Caption := ATitle;
+  lblName.Caption := AName;
+  lblSurname.Caption := ASurname;
+  lblAge.Caption := AAge;
+end;
+//
+//
+//
+//
+
+//
+//
+//
+// procedure TfrmChooseYourLang.btnEnglishClick(Sender: TObject);
+// begin
+// SetLabels('Name', 'Surname', 'Age', 'Choose Your Language', 'Comic Sans MS');
+// end;
+//
+//
+// procedure TfrmChooseYourLang.btnFrenchClick(Sender: TObject);
+// begin
+// SetLabels('Nom', 'Prénom', 'Âge', 'Choisissez votre langue', 'Comic Sans MS');
+// end;
+//
+//
+// procedure TfrmChooseYourLang.btnHindiClick(Sender: TObject);
+// begin
+// SetLabels('नाम ', 'उपनाम ', 'आयु ', 'अपनी भाषा चुनें', 'Mangal');
+// end;
+//
+//
+// procedure TfrmChooseYourLang.btnBengaliClick(Sender: TObject);
+// begin
+// SetLabels('নাম ', 'উপনাম ', 'বয়স ', 'আপনার ভাষা নির্বাচন করুন', 'Nirmala UI');
+// end;
+
+procedure TfrmChooseYourLang.bitBtnResetClick(Sender: TObject);
+begin
+  edtName.Clear;
+  edtSurname.Clear;
+  edtAge.Text := '';
 end;
 
 procedure TfrmChooseYourLang.FormCreate(Sender: TObject);
